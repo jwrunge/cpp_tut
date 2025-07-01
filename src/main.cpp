@@ -3,6 +3,7 @@
 #include <ctime>
 #include <filesystem>
 #include <iostream>
+#include <string>
 #include <sys/stat.h>
 
 namespace fs = std::filesystem;
@@ -17,7 +18,6 @@ fs::file_time_type get_folder_last_modified_time(const fs::path &folder_path) {
         last_modified_time = entry_time;
       }
     } catch (const fs::filesystem_error &ex) {
-      // Handle errors, e.g., permission denied for certain files/directories
       std::cerr << "Error accessing " << entry.path() << ": " << ex.what()
                 << std::endl;
     }
