@@ -1,1 +1,0 @@
-. "/Users/jacobrunge/Code/cpp_tut/build/Release/generators/conanbuildenv-release-armv8.sh"
