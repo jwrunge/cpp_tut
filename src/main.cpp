@@ -1,4 +1,4 @@
-#include <chrono>
+#include <algorithm>
 #include <cstdlib>
 #include <ctime>
 #include <filesystem>
@@ -26,20 +26,14 @@ fs::file_time_type get_folder_last_modified_time(const fs::path &folder_path) {
 }
 
 void runBuildCommands() {
-  struct stat generatedStat;
-  if (stat("build/Release/generators", &generatedStat) == 0) {
-    fs::file_time_type srcLastModified = get_folder_last_modified_time("src");
+  fs::file_time_type generatedLastModifiedTime =
+      get_folder_last_modified_time("build/Release/generators");
+  fs::file_time_type srcLastModified = get_folder_last_modified_time("src");
 
-    auto srcEpochTime = srcLastModified.time_since_epoch();
-    auto generatedEpochTime = std::chrono::seconds(generatedStat.st_mtime);
-    auto srcSeconds =
-        std::chrono::duration_cast<std::chrono::seconds>(srcEpochTime);
-
-    if (srcSeconds <= generatedEpochTime) {
-      std::cout << "No changes detected in src directory. Skipping build."
-                << std::endl;
-      return;
-    }
+  if (srcLastModified <= generatedLastModifiedTime) {
+    std::cout << "No changes detected in src directory. Skipping build."
+              << std::endl;
+    return;
   }
 
   int installResult = system("conan install . --build=missing");
@@ -64,8 +58,12 @@ void runBuildCommands() {
 }
 
 int main(int argc, char *argv[]) {
+  bool init = false;
   bool run = false;
-  if (argc > 1 && std::string(argv[1]) == "--run") {
+
+  std::string runOptions[] = {"--run", "-r", "run"};
+  if (argc > 1 && std::find(std::begin(runOptions), std::end(runOptions),
+                            std::string(argv[1])) != std::end(runOptions)) {
     run = true;
   }
 
