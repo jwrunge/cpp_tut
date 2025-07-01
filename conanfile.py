@@ -29,6 +29,8 @@ class CppTutConan(ConanFile):
     def configure(self):
         if self.options.shared:
             self.options.rm_safe("fPIC")
+        # Set C++20 standard
+        self.settings.compiler.cppstd = "20"
 
     def layout(self):
         cmake_layout(self)

@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/jacobrunge/Code/cpp_tut/build/Release",
+  "command": "/usr/bin/c++   -stdlib=libc++ -O3 -DNDEBUG -std=c++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fPIE -o CMakeFiles/cpp_tut.dir/src/main.cpp.o -c /Users/jacobrunge/Code/cpp_tut/src/main.cpp",
+  "file": "/Users/jacobrunge/Code/cpp_tut/src/main.cpp",
+  "output": "CMakeFiles/cpp_tut.dir/src/main.cpp.o"
+}
+]
